@@ -1,11 +1,24 @@
 function App() {
   const [todos, setTodos] = React.useState([]);
   const [input, setInput] = React.useState('');
+  const [dueDate, setDueDate] = React.useState('');
+  const [priority, setPriority] = React.useState('Low');
 
   const addTodo = () => {
     if (input.trim() === '') return;
-    setTodos([...todos, { text: input, id: Date.now(), completed: false }]);
+    setTodos([
+      ...todos,
+      {
+        text: input,
+        id: Date.now(),
+        completed: false,
+        dueDate,
+        priority,
+      },
+    ]);
     setInput('');
+    setDueDate('');
+    setPriority('Low');
   };
 
   const toggleTodo = id => {
@@ -25,6 +38,16 @@ function App() {
         onChange={e => setInput(e.target.value)}
         placeholder="Add a todo"
       />
+      <input
+        type="date"
+        value={dueDate}
+        onChange={e => setDueDate(e.target.value)}
+      />
+      <select value={priority} onChange={e => setPriority(e.target.value)}>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
       <button onClick={addTodo}>Add</button>
       <ul>
         {todos.map(todo => (
@@ -35,6 +58,10 @@ function App() {
             >
               {todo.text}
             </span>
+            {todo.dueDate && (
+              <span style={{ marginLeft: '0.5rem' }}>Due: {todo.dueDate}</span>
+            )}
+            <span style={{ marginLeft: '0.5rem' }}>Priority: {todo.priority}</span>
             <button onClick={() => deleteTodo(todo.id)}>Delete</button>
           </li>
         ))}
