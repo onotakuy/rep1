@@ -1,6 +1,7 @@
 # React Todo App
 
-A simple Todo application built with React.
+A simple Todo application built with React. You can now set a due date and
+priority for each todo item.
 
 ## Usage
 
